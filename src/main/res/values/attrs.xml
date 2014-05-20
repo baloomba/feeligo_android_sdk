@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="corner_radius" format="dimension"/>
+    <attr name="border_width" format="dimension"/>
+    <attr name="border_color" format="color"/>
+    <attr name="round_background" format="boolean"/>
+    <attr name="is_oval" format="boolean"/>
+    <attr name="ratio" format="float"/>
+    <attr name="fade_in_time" format="integer"/>
+
+    <declare-styleable name="NetworkImageView">
+        <attr name="android:scaleType"/>
+
+        <attr name="corner_radius"/>
+        <attr name="border_width"/>
+        <attr name="border_color"/>
+        <attr name="round_background"/>
+        <attr name="is_oval"/>
+
+        <attr name="ratio"/>
+
+        <attr name="fade_in_time"/>
+    </declare-styleable>
+
+</resources>

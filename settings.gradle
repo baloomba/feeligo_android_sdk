@@ -1,0 +1,6 @@
+// <editor-fold desc="LIBS">
+
+include 'wsvolley'
+project(':wsvolley').projectDir = new File('libs/wsvolley')
+
+// </editor-fold>
