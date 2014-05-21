@@ -3,8 +3,6 @@ package com.baloomba.feeligo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.baloomba.feeligo.helper.JSONHelper;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,8 +16,6 @@ public class Sticker implements Parcelable {
     // <editor-fold desc="VARIABLES">
 
     private final static String TAG = Sticker.class.getSimpleName();
-
-    private final static String REG_EXP = "\\[s:([a-zA-Z0-9\\/\\.\\?\\=]+[a-zA-Z0-9]*)\\]";
 
     private Long mId;
     private String mCode;
@@ -162,26 +158,6 @@ public class Sticker implements Parcelable {
 
         // <editor-fold desc="FACTORY METHODS">
 
-//      Sticker JSON Exemple
-//          {
-//              "id": 31491,
-//              "code": null,
-//              "tags": [
-//                      "lol",
-//                      "yeah",
-//                      "cool",
-//                      "happy",
-//                      "StarCop"
-//              ],
-//              "image_url": "http://stkr.es/p/oar",
-//              "image": {
-//                  "sizes": {
-//                      "70x70": "http://stkr.es/p/oar",
-//                      "140x140": "http://stkr.es/p3w/oar",
-//                      "280x280": "http://stkr.es/p7s/oar",
-//                      "70x70ext": "http://stkr.es/p/oar.png"
-//                  }
-//          }
         public Sticker stickerFromJSON(JSONObject object) throws JSONException {
             if (object == null)
                 return null;

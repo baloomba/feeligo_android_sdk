@@ -3,8 +3,6 @@ package com.baloomba.feeligo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.baloomba.feeligo.helper.JSONHelper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

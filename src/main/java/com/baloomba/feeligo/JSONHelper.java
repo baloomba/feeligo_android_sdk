@@ -1,4 +1,4 @@
-package com.baloomba.feeligo.helper;
+package com.baloomba.feeligo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
