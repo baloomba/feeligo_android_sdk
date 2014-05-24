@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="feeligo_sticker_keyboard_pack_bar_height">50dp</dimen>
+    <dimen name="feeligo_sticker_keyboard_pack_item_size">47dp</dimen>
+    <dimen name="feeligo_sticker_keyboard_separation_height">3dp</dimen>
+</resources>
