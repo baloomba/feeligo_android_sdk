@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import com.baloomba.feeligo.helper.FeeligoSettings;
 import com.baloomba.feeligo.R;
 
+import com.baloomba.feeligo.model.StickerImage;
 import com.baloomba.wsvolley.WSManager;
 import com.baloomba.wsvolley.WSMethod;
 import com.baloomba.wsvolley.WSRequest;
@@ -21,9 +22,6 @@ public class FeeligoStickerImageView extends NetworkImageView {
     // <editor-fold desc="VARIABLES">
 
     private static final String TAG = FeeligoStickerImageView.class.getSimpleName();
-
-    private static final String NAME_SPACE = "http://schemas.android.com/apk/res-auto";
-    private static final String ACTIVE_PROPERTY = "is_active";
 
     private static final String BASE_STICKER_URL = "http://stkr.es/";
     private static final String SMALL_PREFIX = "p";
@@ -100,13 +98,13 @@ public class FeeligoStickerImageView extends NetworkImageView {
                 int density = mContext.getResources().getInteger(R.integer.density);
                 String prefix;
                 switch (density) {
-                    case 1:
+                    case StickerImage.SMALL:
                         prefix = SMALL_PREFIX;
                         break;
-                    case 3:
+                    case StickerImage.LARGE:
                         prefix = LARGE_PREFIX;
                         break;
-                    case 2:
+                    case StickerImage.MEDIUM:
                     default:
                         prefix = MEDIUM_PREFIX;
                 }

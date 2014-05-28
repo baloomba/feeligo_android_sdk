@@ -52,6 +52,7 @@
                 android:background="@android:color/white" />
         </LinearLayout>
         <HorizontalScrollView
+            android:id="@+id/frame_sticker_keyboard_horizontal_scroll_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:scrollbars="none"

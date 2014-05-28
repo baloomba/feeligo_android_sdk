@@ -1,14 +1,16 @@
 package com.baloomba.feeligo.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.baloomba.feeligo.R;
 import com.baloomba.feeligo.helper.JSONHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FeeligoStickerImage implements Parcelable {
+public class StickerImage implements Parcelable {
 
     // <editor-fold desc="GLOBAL VARIABLES">
 
@@ -37,7 +39,7 @@ public class FeeligoStickerImage implements Parcelable {
 
     // <editor-fold desc="CONSTRUCTORS">
 
-    protected FeeligoStickerImage(Init<?> builder) {
+    protected StickerImage(Init<?> builder) {
         mSmallURL = builder.mSmallURL;
         mSmallImageAvailable = builder.mSmallImageAvailable;
         mMediumURL = builder.mMediumURL;
@@ -46,7 +48,7 @@ public class FeeligoStickerImage implements Parcelable {
         mLargeImageAvailable = builder.mLargeImageAvailable;
     }
 
-    protected FeeligoStickerImage(Parcel in) {
+    protected StickerImage(Parcel in) {
         mSmallURL = in.readString();
         mSmallImageAvailable = in.readInt() == 1;
         mMediumURL = in.readString();
@@ -73,6 +75,19 @@ public class FeeligoStickerImage implements Parcelable {
 
     public String getURL(int size) {
         switch (size) {
+            case MEDIUM:
+                return getMediumURL();
+            case LARGE:
+                return getLargeURL();
+            case SMALL:
+            default:
+                return getSmallURL();
+        }
+    }
+
+    public String getUrl(Context context) {
+        int density = context.getResources().getInteger(R.integer.density);
+        switch (density) {
             case MEDIUM:
                 return getMediumURL();
             case LARGE:
@@ -114,16 +129,16 @@ public class FeeligoStickerImage implements Parcelable {
         parcel.writeInt(mLargeImageAvailable ? 1 : 0);
     }
 
-    public static final Creator<FeeligoStickerImage> CREATOR =
-            new Creator<FeeligoStickerImage>() {
+    public static final Creator<StickerImage> CREATOR =
+            new Creator<StickerImage>() {
                 @Override
-                public FeeligoStickerImage createFromParcel(Parcel source) {
-                    return new FeeligoStickerImage(source);
+                public StickerImage createFromParcel(Parcel source) {
+                    return new StickerImage(source);
                 }
 
                 @Override
-                public FeeligoStickerImage[] newArray(int size) {
-                    return new FeeligoStickerImage[size];
+                public StickerImage[] newArray(int size) {
+                    return new StickerImage[size];
                 }
             };
 
@@ -163,7 +178,7 @@ public class FeeligoStickerImage implements Parcelable {
 //          }
 //        }
 
-        public FeeligoStickerImage stickerImageFromJSON(JSONObject object) throws JSONException {
+        public StickerImage stickerImageFromJSON(JSONObject object) throws JSONException {
             if (object == null)
                 return null;
             object = JSONHelper.getJSONObject(object, JSON_KEY_SIZES);
@@ -180,7 +195,7 @@ public class FeeligoStickerImage implements Parcelable {
         }
 
         // TODO ASK IF ALL SIZES ARE ALWAYS AVAILABLE
-        public FeeligoStickerImage stickerImage(String code) {
+        public StickerImage stickerImage(String code) {
             return new Builder()
                     .setSmallURL(BASE_URL + SMALL_PREFIX + code)
                     .setMediumURL(BASE_URL + MEDIUM_PREFIX + code)
@@ -256,8 +271,8 @@ public class FeeligoStickerImage implements Parcelable {
 
         protected abstract T self();
 
-        public FeeligoStickerImage build() {
-            return new FeeligoStickerImage(this);
+        public StickerImage build() {
+            return new StickerImage(this);
         }
 
         // </editor-fold>

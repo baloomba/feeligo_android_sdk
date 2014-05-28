@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="density">2</integer>
+    <integer name="density">1</integer>
 </resources>

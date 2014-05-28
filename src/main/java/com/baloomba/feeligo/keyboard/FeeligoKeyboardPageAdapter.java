@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.baloomba.feeligo.FeeligoKeyboard;
-import com.baloomba.feeligo.model.FeeligoStickerPack;
+import com.baloomba.feeligo.model.StickerPack;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class FeeligoKeyboardPageAdapter extends FragmentPagerAdapter {
     private static final String TAG = FeeligoKeyboardPageAdapter.class.getSimpleName();
 
     private Context mContext;
-    private ArrayList<FeeligoStickerPack> mData;
+    private ArrayList<StickerPack> mData;
     private FeeligoKeyboard.OnStickerClickListener mListener;
 
     // </editor-fold>
@@ -33,7 +33,7 @@ public class FeeligoKeyboardPageAdapter extends FragmentPagerAdapter {
 
     // <editor-fold desc="SETTERS">
 
-    public void setData(ArrayList<FeeligoStickerPack> data) {
+    public void setData(ArrayList<StickerPack> data) {
         mData = data;
     }
 

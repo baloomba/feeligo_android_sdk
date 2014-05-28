@@ -13,23 +13,23 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FeeligoSticker implements Parcelable {
+public class Sticker implements Parcelable {
 
     // <editor-fold desc="VARIABLES">
 
-    private final static String TAG = FeeligoSticker.class.getSimpleName();
+    private final static String TAG = Sticker.class.getSimpleName();
 
     private Long mId;
     private String mSendableCode;
     private ArrayList<String> mTags;
     private String mImageURL;
-    private FeeligoStickerImage mImage;
+    private StickerImage mImage;
 
     // </editor-fold>
 
     // <editor-fold desc="CONSTRUCTORS">
 
-    public FeeligoSticker(Init<?> builder) {
+    public Sticker(Init<?> builder) {
         mId = builder.mId;
         mSendableCode = builder.mSendableCode;
         mTags = builder.mTags;
@@ -37,7 +37,7 @@ public class FeeligoSticker implements Parcelable {
         mImage = builder.mImage;
     }
 
-    public FeeligoSticker(Parcel in) {
+    public Sticker(Parcel in) {
         mId = in.readLong();
         mSendableCode = in.readString();
         mTags = null;
@@ -49,7 +49,7 @@ public class FeeligoSticker implements Parcelable {
             }
         }
         mImageURL = in.readString();
-        mImage = in.readParcelable(FeeligoStickerImage.class.getClassLoader());
+        mImage = in.readParcelable(StickerImage.class.getClassLoader());
     }
 
     // </editor-fold>
@@ -72,7 +72,7 @@ public class FeeligoSticker implements Parcelable {
         mImageURL = url;
     }
 
-    public void setImages(FeeligoStickerImage image) {
+    public void setImages(StickerImage image) {
         mImage = image;
     }
 
@@ -96,7 +96,7 @@ public class FeeligoSticker implements Parcelable {
         return mImageURL;
     }
 
-    public FeeligoStickerImage getImage() {
+    public StickerImage getImage() {
         return mImage;
     }
 
@@ -127,14 +127,14 @@ public class FeeligoSticker implements Parcelable {
         dest.writeParcelable(mImage, flags);
     }
 
-    public static final Creator<FeeligoSticker> CREATOR
-            = new Creator<FeeligoSticker>() {
-        public FeeligoSticker createFromParcel(Parcel in) {
-            return new FeeligoSticker(in);
+    public static final Creator<Sticker> CREATOR
+            = new Creator<Sticker>() {
+        public Sticker createFromParcel(Parcel in) {
+            return new Sticker(in);
         }
 
-        public FeeligoSticker[] newArray(int size) {
-            return new FeeligoSticker[size];
+        public Sticker[] newArray(int size) {
+            return new Sticker[size];
         }
     };
 
@@ -160,7 +160,7 @@ public class FeeligoSticker implements Parcelable {
 
         // <editor-fold desc="FACTORY METHODS">
 
-        public FeeligoSticker stickerFromJSON(JSONObject object) throws JSONException {
+        public Sticker stickerFromJSON(JSONObject object) throws JSONException {
             if (object == null)
                 return null;
             ArrayList<String> tags = null;
@@ -176,23 +176,23 @@ public class FeeligoSticker implements Parcelable {
                     .setSendableCode(object.getString("image_url"))
                     .setTags(tags)
                     .setImageURL(object.getString("image_url"))
-                    .setImages(FeeligoStickerImage.Factory.getInstance()
+                    .setImages(StickerImage.Factory.getInstance()
                             .stickerImageFromJSON(JSONHelper.getJSONObject(object, "image")))
                     .build();
         }
 
-        public FeeligoSticker sticker(String text) {
-            FeeligoSticker feeligoSticker = null;
+        public Sticker sticker(String text) {
+            Sticker sticker = null;
             Pattern pattern = Pattern.compile("\\[s:([a-zA-Z0-9\\/\\.\\?\\=]+[a-zA-Z0-9]*)\\]");
             Matcher matcher = pattern.matcher(text);
             if (matcher.find()) {
                 String code = matcher.group(1).split("/")[1];
-                feeligoSticker = new Builder()
+                sticker = new Builder()
                         .setSendableCode(code)
-                        .setImages(FeeligoStickerImage.Factory.getInstance().stickerImage(code))
+                        .setImages(StickerImage.Factory.getInstance().stickerImage(code))
                         .build();
             }
-            return feeligoSticker;
+            return sticker;
         }
 
         // </editor-fold>
@@ -210,7 +210,7 @@ public class FeeligoSticker implements Parcelable {
         private String mSendableCode;
         private ArrayList<String> mTags;
         private String mImageURL;
-        private FeeligoStickerImage mImage;
+        private StickerImage mImage;
 
         // </editor-fold>
 
@@ -249,7 +249,7 @@ public class FeeligoSticker implements Parcelable {
             return self();
         }
 
-        public T setImages(FeeligoStickerImage image) {
+        public T setImages(StickerImage image) {
             mImage = image;
             return self();
         }
@@ -260,8 +260,8 @@ public class FeeligoSticker implements Parcelable {
 
         protected abstract T self();
 
-        public FeeligoSticker build() {
-            return new FeeligoSticker(this);
+        public Sticker build() {
+            return new Sticker(this);
         }
 
         // </editor-fold>

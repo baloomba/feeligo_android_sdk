@@ -1,5 +1,6 @@
 package com.baloomba.feeligo.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,7 +12,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class FeeligoStickerPack implements Parcelable {
+public class StickerPack implements Parcelable {
 
     // <editor-fold desc="VARIABLES">
 
@@ -21,35 +22,38 @@ public class FeeligoStickerPack implements Parcelable {
     private String mAuthor;
     private String mIconURL;
     private int mIconId;
-    private ArrayList<FeeligoSticker> mFeeligoStickers;
+    private StickerImage mLogo;
+    private ArrayList<Sticker> mStickers;
     private String mDate;
 
     // </editor-fold>
 
     // <editor-fold desc="CONSTRUCTORS">
 
-    protected FeeligoStickerPack(Init<?> builder) {
+    protected StickerPack(Init<?> builder) {
         mId = builder.mId;
         mName = builder.mName;
         mDescription = builder.mDescription;
         mAuthor = builder.mAuthor;
         mIconURL = builder.mIconURL;
         mIconId = builder.mIconId;
-        mFeeligoStickers = builder.mFeeligoStickers;
+        mLogo = builder.mLogo;
+        mStickers = builder.mStickers;
         mDate = builder.mDate;
     }
 
-    protected FeeligoStickerPack(Parcel in) {
+    protected StickerPack(Parcel in) {
         mId = in.readLong();
         mName = in.readString();
         mDescription = in.readString();
         mAuthor = in.readString();
         mIconURL = in.readString();
         mIconId = in.readInt();
-        mFeeligoStickers = new ArrayList<FeeligoSticker>();
+        mLogo = in.readParcelable(StickerImage.class.getClassLoader());
+        mStickers = new ArrayList<Sticker>();
         int size = in.readInt();
         for (int i = 0; i < size; i++) {
-            mFeeligoStickers.add((FeeligoSticker)in.readParcelable(FeeligoSticker.class.getClassLoader()));
+            mStickers.add((Sticker)in.readParcelable(Sticker.class.getClassLoader()));
         }
         mDate = in.readString();
     }
@@ -75,15 +79,19 @@ public class FeeligoStickerPack implements Parcelable {
     }
 
     public String getIconURL() {
-        return mIconURL;
+        return mStickers.get(0).getImageURL();
     }
 
     public int getIconId() {
         return mIconId;
     }
 
-    public ArrayList<FeeligoSticker> getStickers() {
-        return mFeeligoStickers;
+    public ArrayList<Sticker> getStickers() {
+        return mStickers;
+    }
+
+    public String getLogo(Context context) {
+        return mLogo.getUrl(context);
     }
 
     public String getDate() {
@@ -98,8 +106,9 @@ public class FeeligoStickerPack implements Parcelable {
 
     // <editor-fold desc="METHODS">
 
-    public void update() {
-
+    public void update(StickerPack otherPack) {
+        mStickers = otherPack.mStickers;
+        mDate = otherPack.mDate;
     }
 
     // </editor-fold>
@@ -119,21 +128,22 @@ public class FeeligoStickerPack implements Parcelable {
         dest.writeString(mAuthor);
         dest.writeString(mIconURL);
         dest.writeInt(mIconId);
-        dest.writeInt(mFeeligoStickers.size());
-        for (FeeligoSticker feeligoSticker : mFeeligoStickers) {
-            dest.writeParcelable(feeligoSticker, flags);
+        dest.writeParcelable(mLogo, flags);
+        dest.writeInt(mStickers.size());
+        for (Sticker sticker : mStickers) {
+            dest.writeParcelable(sticker, flags);
         }
         dest.writeString(mDate);
     }
 
-    public static final Creator<FeeligoStickerPack> CREATOR
-            = new Creator<FeeligoStickerPack>() {
-        public FeeligoStickerPack createFromParcel(Parcel in) {
-            return new FeeligoStickerPack(in);
+    public static final Creator<StickerPack> CREATOR
+            = new Creator<StickerPack>() {
+        public StickerPack createFromParcel(Parcel in) {
+            return new StickerPack(in);
         }
 
-        public FeeligoStickerPack[] newArray(int size) {
-            return new FeeligoStickerPack[size];
+        public StickerPack[] newArray(int size) {
+            return new StickerPack[size];
         }
     };
 
@@ -159,25 +169,24 @@ public class FeeligoStickerPack implements Parcelable {
 
         // <editor-fold desc="FACTORY">
 
-        public FeeligoStickerPack stickerPack(int iconId, ArrayList<FeeligoSticker> stickers) {
+        public StickerPack stickerPack(int iconId, ArrayList<Sticker> stickers) {
             return new Builder(-1L)
                     .setIconId(iconId)
                     .setStickers(stickers)
                     .build();
         }
 
-        public FeeligoStickerPack stickerPackFromJSON(JSONObject object) throws JSONException {
+        public StickerPack stickerPackFromJSON(JSONObject object) throws JSONException {
             if (object == null)
                 return null;
-            object = object.getJSONObject("sticker_pack");
-            if (object == null)
-                return null;
+            if (object.has("sticker_pack"))
+                object = object.getJSONObject("sticker_pack");
             JSONArray array = JSONHelper.getJSONArray(object, "stickers");
-            ArrayList<FeeligoSticker> feeligoStickers = null;
+            ArrayList<Sticker> stickers = null;
             if (array != null) {
-                feeligoStickers = new ArrayList<FeeligoSticker>();
+                stickers = new ArrayList<Sticker>();
                 for (int i = 0; i < array.length(); i++) {
-                    feeligoStickers.add(FeeligoSticker.Factory.getInstance()
+                    stickers.add(Sticker.Factory.getInstance()
                             .stickerFromJSON(array.getJSONObject(i)));
                 }
             }
@@ -187,7 +196,9 @@ public class FeeligoStickerPack implements Parcelable {
                     .setDescription(JSONHelper.getString(object, "description"))
                     .setIconURL(JSONHelper.getString(object, "icon_url"))
                     .setIconId(JSONHelper.getInt(object, "icon_id"))
-                    .setStickers(feeligoStickers)
+                    .setStickers(stickers)
+                    .setLogo(StickerImage.Factory.getInstance()
+                            .stickerImageFromJSON(JSONHelper.getJSONObject(object, "logo")))
                     .setDate(JSONHelper.getString(object, "provided_to_all_users_at"))
                     .build();
         }
@@ -210,7 +221,8 @@ public class FeeligoStickerPack implements Parcelable {
         private String mAuthor;
         private String mIconURL;
         private int mIconId;
-        private ArrayList<FeeligoSticker> mFeeligoStickers;
+        private StickerImage mLogo;
+        private ArrayList<Sticker> mStickers;
         private String mDate;
 
         // </editor-fold>
@@ -240,6 +252,11 @@ public class FeeligoStickerPack implements Parcelable {
             return self();
         }
 
+        public T setLogo(StickerImage logo) {
+            mLogo = logo;
+            return self();
+        }
+
         public T setIconURL(String iconURL) {
             mIconURL = iconURL;
             return self();
@@ -255,8 +272,8 @@ public class FeeligoStickerPack implements Parcelable {
             return self();
         }
 
-        public T setStickers(ArrayList<FeeligoSticker> feeligoStickers) {
-            mFeeligoStickers = feeligoStickers;
+        public T setStickers(ArrayList<Sticker> stickers) {
+            mStickers = stickers;
             return self();
         }
 
@@ -266,8 +283,8 @@ public class FeeligoStickerPack implements Parcelable {
 
         protected abstract T self();
 
-        public FeeligoStickerPack build() {
-            return new FeeligoStickerPack(this);
+        public StickerPack build() {
+            return new StickerPack(this);
         }
 
         // </editor-fold>

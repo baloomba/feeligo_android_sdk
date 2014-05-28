@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feeligo_keyboard_store_text">!</string>
-    <string name="feeligo_keyboard_recent_text">#</string>
-    <string name="feeligo_keyboard_popular_text">$</string>
-    <string name="feeligo_keyboard_search_text">%</string>
+    <string name="StickerStoreAddPack">Add</string>
+    <string name="StickerStoreRemovePack">Remove</string>
+    <string name="Loading">Loading</string>
 </resources>

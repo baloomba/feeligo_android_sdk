@@ -5,7 +5,7 @@ import com.baloomba.feeligo.helper.FeeligoSettings;
 
 import java.net.URLEncoder;
 
-public class FeeligoURLBuilder {
+public class URLBuilder {
 
     // <editor-fold desc="VARIABLES">
 
@@ -78,7 +78,7 @@ public class FeeligoURLBuilder {
     }
 
     public static String stickerPack() {
-        return stickerBase();
+        return stickerPackBase();
     }
 
     // </editor-fold>

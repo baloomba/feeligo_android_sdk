@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.baloomba.feeligo.FeeligoKeyboard;
-import com.baloomba.feeligo.model.FeeligoStickerPack;
+import com.baloomba.feeligo.model.StickerPack;
 import com.baloomba.feeligo.R;
 
 public class FeeligoKeyboardStickerPackPage extends Fragment {
@@ -22,12 +22,12 @@ public class FeeligoKeyboardStickerPackPage extends Fragment {
     private static final String TAG = FeeligoKeyboardStickerPackPage.class.getSimpleName();
 
     private Context mContext;
-    private FeeligoStickerPack mData;
+    private StickerPack mData;
     private FeeligoKeyboard.OnStickerClickListener mListener;
 
     // </editor-fold>
 
-    public static FeeligoKeyboardStickerPackPage newInstance(Context context, FeeligoStickerPack data,
+    public static FeeligoKeyboardStickerPackPage newInstance(Context context, StickerPack data,
                                                      FeeligoKeyboard
                                                              .OnStickerClickListener listener) {
         FeeligoKeyboardStickerPackPage fragment = new FeeligoKeyboardStickerPackPage();

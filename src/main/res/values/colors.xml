@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="keyboard_background">#F2F2F2</color>
+    <color name="sticker_store_remove_background">#BBB</color>
     <color name="default_active_color">#0084FF</color>
+    <color name="black_transparent">#AA000000</color>
 </resources>

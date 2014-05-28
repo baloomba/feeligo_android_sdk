@@ -1,4 +1,4 @@
-package com.baloomba.feeligo.keyboard;
+package com.baloomba.feeligo;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,26 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.baloomba.feeligo.Feeligo;
-import com.baloomba.feeligo.FeeligoKeyboard;
 import com.baloomba.feeligo.model.Sticker;
-import com.baloomba.feeligo.R;
 import com.baloomba.wsvolley.widget.NetworkImageView;
 
 import java.util.ArrayList;
 
-public class FeeligoKeyboardGridAdapter extends BaseAdapter {
+public class FeeligoStoreDetailAdapter extends BaseAdapter {
 
     // <editor-fold desc="VARIABLES">
 
-    private static final String TAG = FeeligoKeyboardGridAdapter.class.getSimpleName();
+    private static final String TAG = FeeligoStoreDetailAdapter.class.getSimpleName();
 
     private static LayoutInflater sInflater;
 
     private Context mContext;
     private ArrayList<Sticker> mData;
     private ViewHolder mHolder;
-    private FeeligoKeyboard.OnStickerClickListener mListener;
 
     // </editor-fold>
 
@@ -68,7 +64,6 @@ public class FeeligoKeyboardGridAdapter extends BaseAdapter {
 
     public void init(Context context) {
         sInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         mContext = context;
     }
 
@@ -76,21 +71,9 @@ public class FeeligoKeyboardGridAdapter extends BaseAdapter {
         mData = data;
     }
 
-    public void setListener(FeeligoKeyboard.OnStickerClickListener listener) {
-        mListener = listener;
-    }
-
     private void setContent(final Sticker sticker) {
         String url = sticker.getImage().getUrl(mContext);
         mHolder.image.setImageUrl(url);
-        mHolder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Feeligo.getInstance().setRecentSticker(sticker.getId());
-                if (mListener != null)
-                    mListener.onStickerClick(sticker.getSendableCode());
-            }
-        });
     }
 
     // </editor-fold>
@@ -102,4 +85,5 @@ public class FeeligoKeyboardGridAdapter extends BaseAdapter {
     }
 
     // </editor-fold>
+
 }
