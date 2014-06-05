@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,14 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baloomba.feeligo.helper.DisplayHelper;
 import com.baloomba.feeligo.helper.FeeligoSettings;
 import com.baloomba.feeligo.keyboard.FeeligoKeyboardListener;
 import com.baloomba.feeligo.keyboard.FeeligoKeyboardPageAdapter;
 import com.baloomba.feeligo.model.StickerPack;
 
 import com.baloomba.feeligo.model.UserStickerPack;
+import com.baloomba.feeligo.store.FeeligoStickerStoreActivity;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class FeeligoKeyboard extends Fragment {
     private FeeligoKeyboardPageAdapter mAdapter;
     private ViewPager mPager;
 
-    private int mViewWidth = 0;
+    private int mParentViewWidth = 0;
     private int mCellWidth = 0;
     private int mLastPosition = -1;
 
@@ -76,6 +77,9 @@ public class FeeligoKeyboard extends Fragment {
         sInflater = inflater;
         mView = sInflater.inflate(R.layout.fragment_keyboard, container, false);
         if (mView != null) {
+            mParentViewWidth = DisplayHelper.getWidth(getActivity());
+            mCellWidth = getActivity().getResources()
+                    .getDimensionPixelSize(R.dimen.feeligo_sticker_keyboard_pack_item_size);
             if (FeeligoSettings.getStoreAvailable()) {
                 mView.findViewById(R.id.frame_sticker_keyboard_store).setVisibility(View.VISIBLE);
                 mView.findViewById(R.id.frame_sticker_keyboard_store)
@@ -133,6 +137,7 @@ public class FeeligoKeyboard extends Fragment {
 
     public void show() {
         mView.findViewById(R.id.fragment_keyboard_main_layout).setVisibility(View.VISIBLE);
+        pageSelected(mLastPosition);
     }
 
     public void hide() {
@@ -140,16 +145,17 @@ public class FeeligoKeyboard extends Fragment {
     }
 
     public void toggle() {
-        View view = mView.findViewById(R.id.fragment_keyboard_main_layout);
-        view.setVisibility((view.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
+        if (mView.findViewById(R.id.fragment_keyboard_main_layout).getVisibility() == View.VISIBLE)
+            hide();
+        else
+            show();
     }
 
     private void getStickers() {
-        Log.e(TAG, "getStickers");
         mStickerPacks.clear();
-        if (FeeligoSettings.getRecentAvailable())
+        if (Feeligo.getInstance().getRecentAvailable())
             mStickerPacks.add(Feeligo.getInstance().getRecentStickers());
-        if (FeeligoSettings.getPopularAvailable())
+        if (Feeligo.getInstance().getPopularAvailable())
             mStickerPacks.add(Feeligo.getInstance().getPopularStickers());
         ArrayList<UserStickerPack> stickerPacks = Feeligo.getInstance().getUserStickerPack();
         for (UserStickerPack stickerPack : stickerPacks) {
@@ -159,7 +165,6 @@ public class FeeligoKeyboard extends Fragment {
     }
 
     private void updateStickerView() {
-        Log.e(TAG, "updateStickerView");
         LinearLayout stickerPacksLayout = ((LinearLayout)mView
                 .findViewById(R.id.frame_sticker_keyboard_pack_layout));
         stickerPacksLayout.removeAllViews();
@@ -168,7 +173,7 @@ public class FeeligoKeyboard extends Fragment {
                     false);
             if (view != null) {
                 ((TextView)view.findViewById(R.id.cell_sticker_pack_icon_text_view))
-                        .setText(String.valueOf((char)stickerPack.getIconId()));
+                        .setText(String.valueOf((char) stickerPack.getIconId()));
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -184,12 +189,14 @@ public class FeeligoKeyboard extends Fragment {
         int pos = getActivity().getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
                 .getInt(LAST_POSITION, 0);
         if (pos == 0) {
-            pos = (FeeligoSettings.getRecentAvailable() ? pos + 1 : pos);
-            pos = (FeeligoSettings.getPopularAvailable() ? pos + 1 : pos);
+            pos = (Feeligo.getInstance().getRecentAvailable() ? pos + 1 : pos);
+            pos = (Feeligo.getInstance().getPopularAvailable() ? pos + 1 : pos);
         } else if (pos >= mStickerPacks.size()) {
             pos = mStickerPacks.size() - 1;
         }
+        mAdapter.setData(mStickerPacks);
         mAdapter.notifyDataSetChanged();
+        mPager.invalidate();
         mPager.setCurrentItem(pos);
         pageSelected(pos);
     }
@@ -202,19 +209,13 @@ public class FeeligoKeyboard extends Fragment {
     private void pageSelected(int position) {
         getActivity().getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
                 .edit().putInt(LAST_POSITION, position).commit();
-
-        if (mViewWidth == 0)
-            mViewWidth = mView.getWidth();
-        if (mCellWidth == 0)
-            mCellWidth = mView
-                    .findViewById(R.id.cell_sticker_pack_icon_text_view).getWidth();
-
-        if (mCellWidth != 0 && mViewWidth != 0) {
+        if (mCellWidth != 0 && mParentViewWidth != 0) {
             int offset = 0;
             offset = FeeligoSettings.getStoreAvailable() ? offset + 1 : offset;
             offset = FeeligoSettings.getSearchAvailable() ? offset + 1 : offset;
 
-            int x = ((mViewWidth - offset * mCellWidth) / mCellWidth) - 2;
+            int scrollViewWidth = (mParentViewWidth - offset * mCellWidth);
+            int x = (int)Math.ceil((double)scrollViewWidth / mCellWidth) - 2;
 
             int direction = UNKNOWN;
             if (mLastPosition > position)
@@ -222,17 +223,24 @@ public class FeeligoKeyboard extends Fragment {
             else if (mLastPosition < position)
                 direction = RIGHT;
 
-            if (direction == RIGHT) {
-                int scrollX = (position - x) * mCellWidth;
-                ((HorizontalScrollView) mView
-                        .findViewById(R.id.frame_sticker_keyboard_horizontal_scroll_view))
-                        .smoothScrollTo(scrollX, 0);
-            } else {
+            int initialScrollX =  mView
+                    .findViewById(R.id.frame_sticker_keyboard_horizontal_scroll_view).getScrollX();
+
+            if (direction == LEFT) {
                 int scrollX = (position - 1) * mCellWidth;
-                ((HorizontalScrollView) mView
-                        .findViewById(R.id.frame_sticker_keyboard_horizontal_scroll_view))
-                        .smoothScrollTo(scrollX, 0);
+                if (initialScrollX > scrollX)
+                    ((HorizontalScrollView) mView
+                            .findViewById(R.id.frame_sticker_keyboard_horizontal_scroll_view))
+                            .smoothScrollTo(scrollX, 0);
+            } else {
+                int scrollX = (position - x) * mCellWidth;
+                if (initialScrollX < scrollX) {
+                    ((HorizontalScrollView) mView
+                            .findViewById(R.id.frame_sticker_keyboard_horizontal_scroll_view))
+                            .smoothScrollTo(scrollX, 0);
+                }
             }
+
         }
         mLastPosition = position;
     }

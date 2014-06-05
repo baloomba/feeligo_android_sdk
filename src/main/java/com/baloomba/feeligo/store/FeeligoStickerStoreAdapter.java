@@ -1,4 +1,4 @@
-package com.baloomba.feeligo;
+package com.baloomba.feeligo.store;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,13 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.baloomba.feeligo.helper.FeeligoSettings;
+import com.baloomba.feeligo.Feeligo;
+import com.baloomba.feeligo.R;
 import com.baloomba.feeligo.helper.ViewHelper;
 import com.baloomba.feeligo.model.StickerPack;
 import com.baloomba.feeligo.widget.FeeligoStickerImageView;
@@ -30,7 +32,6 @@ public class FeeligoStickerStoreAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<StickerPack> mData;
-    private boolean mLoading = false;
 
     // </editor-fold>
 
@@ -85,7 +86,9 @@ public class FeeligoStickerStoreAdapter extends BaseAdapter {
 //                        .findViewById(R.id.cell_sticker_store_price_text_view);
                 holder.layout = (LinearLayout)convertView
                         .findViewById(R.id.cell_sticker_store_layout);
-                holder.button = (Button)convertView
+                holder.button = (RelativeLayout)convertView
+                        .findViewById(R.id.cell_sticker_store_button_layout);
+                holder.buttonImage = (ImageView)convertView
                         .findViewById(R.id.cell_sticker_store_action_button);
                 holder.progressBar = (ProgressBar)convertView
                         .findViewById(R.id.cell_sticker_store_action_progress_bar);
@@ -102,7 +105,7 @@ public class FeeligoStickerStoreAdapter extends BaseAdapter {
     // <editor-fold desc="METHODS">
 
     private void setContent(final ViewHolder holder, final StickerPack stickerPack) {
-        if (mLoading) {
+        if (stickerPack.getIsLoading()) {
             holder.progressBar.setVisibility(View.VISIBLE);
         } else {
             ViewHelper.setEnabledViewWithAlpha(holder.button, true);
@@ -112,34 +115,31 @@ public class FeeligoStickerStoreAdapter extends BaseAdapter {
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    goToDetailsActivity(stickerPack);
+                    if (!stickerPack.getIsLoading())
+                        goToDetailsActivity(stickerPack);
                 }
             });
             holder.progressBar.setVisibility(View.GONE);
-            holder.button.setVisibility(View.VISIBLE);
+            holder.buttonImage.setVisibility(View.VISIBLE);
             if (Feeligo.getInstance().isStickerPackPresent(stickerPack.getId())) {
-                holder.button.setBackgroundColor(mContext.getResources()
-                        .getColor(R.color.sticker_store_remove_background));
-                holder.button.setText(R.string.StickerStoreRemovePack);
-                holder.button.setTextColor(mContext.getResources()
-                        .getColor(android.R.color.black));
+                holder.buttonImage.setImageResource(R.drawable.ic_remove_pack);
                 holder.button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mLoading = true;
-                        holder.button.setVisibility(View.GONE);
+                        stickerPack.setIsLoading(true);
+                        holder.buttonImage.setVisibility(View.GONE);
                         holder.progressBar.setVisibility(View.VISIBLE);
                         Feeligo.getInstance().removeStickerPack(stickerPack,
                                 new WSStringResponseListener() {
                                     @Override
                                     public void onResponse(String response) {
-                                        mLoading = false;
+                                        stickerPack.setIsLoading(false);
                                         notifyDataSetChanged();
                                     }
 
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        mLoading = false;
+                                        stickerPack.setIsLoading(false);
                                         notifyDataSetChanged();
                                     }
                                 }
@@ -147,27 +147,24 @@ public class FeeligoStickerStoreAdapter extends BaseAdapter {
                     }
                 });
             } else {
-                holder.button.setBackgroundColor(FeeligoSettings.getActiveColor());
-                holder.button.setText(R.string.StickerStoreAddPack);
-                holder.button.setTextColor(mContext.getResources()
-                        .getColor(android.R.color.white));
+                holder.buttonImage.setImageResource(R.drawable.ic_add_pack);
                 holder.button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mLoading = true;
-                        holder.button.setVisibility(View.GONE);
+                        stickerPack.setIsLoading(true);
+                        holder.buttonImage.setVisibility(View.GONE);
                         holder.progressBar.setVisibility(View.VISIBLE);
                         Feeligo.getInstance().addStickerPack(stickerPack,
                                 new WSStringResponseListener() {
                                     @Override
                                     public void onResponse(String response) {
-                                        mLoading = false;
+                                        stickerPack.setIsLoading(false);
                                         notifyDataSetChanged();
                                     }
 
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        mLoading = false;
+                                        stickerPack.setIsLoading(false);
                                         notifyDataSetChanged();
                                     }
                                 }
@@ -193,7 +190,8 @@ public class FeeligoStickerStoreAdapter extends BaseAdapter {
         FeeligoStickerImageView imageView;
         TextView nameTextView;
         TextView authorTextView;
-        Button button;
+        ImageView buttonImage;
+        RelativeLayout button;
         ProgressBar progressBar;
 //        TextView priceTextView;
     }

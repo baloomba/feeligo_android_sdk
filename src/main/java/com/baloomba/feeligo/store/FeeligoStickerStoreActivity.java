@@ -1,4 +1,4 @@
-package com.baloomba.feeligo;
+package com.baloomba.feeligo.store;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,10 +9,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.android.volley.VolleyError;
 
+import com.baloomba.feeligo.R;
 import com.baloomba.feeligo.helper.ActionBarHelper;
 import com.baloomba.feeligo.helper.FeeligoSettings;
 import com.baloomba.feeligo.model.StickerPack;
@@ -34,6 +34,7 @@ public class FeeligoStickerStoreActivity extends ActionBarActivity {
 
     private Handler mHandler = new Handler();
     private ArrayList<StickerPack> mData;
+    private FeeligoStickerStoreAdapter mAdapter = null;
 
     // </editor-fold>
 
@@ -47,6 +48,13 @@ public class FeeligoStickerStoreActivity extends ActionBarActivity {
         setActionBar();
 
         getData();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mAdapter != null)
+            mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -118,11 +126,11 @@ public class FeeligoStickerStoreActivity extends ActionBarActivity {
     private void setContent() {
         findViewById(R.id.activity_sticker_store_loading_layout).setVisibility(View.GONE);
 
-        FeeligoStickerStoreAdapter adapter = new FeeligoStickerStoreAdapter(this);
-        adapter.setData(mData);
+        mAdapter = new FeeligoStickerStoreAdapter(this);
+        mAdapter.setData(mData);
 
         ListView listView = ((ListView)findViewById(R.id.activity_sticker_store_list_view));
-        listView.setAdapter(adapter);
+        listView.setAdapter(mAdapter);
     }
 
     // </editor-fold>

@@ -26,6 +26,8 @@ public class StickerPack implements Parcelable {
     private ArrayList<Sticker> mStickers;
     private String mDate;
 
+    private Boolean mIsLoading = false;
+
     // </editor-fold>
 
     // <editor-fold desc="CONSTRUCTORS">
@@ -98,9 +100,17 @@ public class StickerPack implements Parcelable {
         return mDate;
     }
 
+    public Boolean getIsLoading() {
+        return mIsLoading;
+    }
+
     // </editor-fold>
 
     // <editor-fold desc="SETTERS">
+
+    public void setIsLoading(Boolean isLoading) {
+        mIsLoading = isLoading;
+    }
 
     // </editor-fold>
 

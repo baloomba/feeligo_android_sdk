@@ -92,6 +92,7 @@ public class Feeligo {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.e(TAG, "response:" + response);
                     JSONObject object = new JSONObject(response);
                     JSONArray array = object.getJSONArray("stickers");
                     ArrayList<Sticker> stickers = new ArrayList<Sticker>();
@@ -116,14 +117,16 @@ public class Feeligo {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.e(TAG, "response:" + response);
                     JSONObject object = new JSONObject(response);
                     JSONArray array = object.getJSONArray("user_sticker_packs");
                     for (int i = 0; i < array.length(); i++) {
                         mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
                                 .userStickerPackFromJSON(array.getJSONObject(i)));
-                        // TODO REMOVE AFTER TEST
-//                        mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
-//                                .userStickerPackFromJSON(array.getJSONObject(i)));
+                        mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
+                                .userStickerPackFromJSON(array.getJSONObject(i)));
+                        mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
+                                .userStickerPackFromJSON(array.getJSONObject(i)));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "getUserStickerPack.onResponse:" + e.getMessage());
@@ -146,8 +149,16 @@ public class Feeligo {
         return mUserStickerPacks;
     }
 
+    public boolean getRecentAvailable() {
+        return FeeligoSettings.getRecentAvailable() && mRecent != null;
+    }
+
     public StickerPack getRecentStickers() {
         return mRecent;
+    }
+
+    public boolean getPopularAvailable() {
+        return FeeligoSettings.getPopularAvailable() && mPopular != null;
     }
 
     public StickerPack getPopularStickers() {
@@ -195,7 +206,6 @@ public class Feeligo {
                 new WSStringResponseListener() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e(TAG, response);
                         try {
                             JSONObject object = new JSONObject(response);
                             mUserStickerPacks.add(0, UserStickerPack.Factory.getInstance()
@@ -231,7 +241,6 @@ public class Feeligo {
                     new WSStringResponseListener() {
                         @Override
                         public void onResponse(String response) {
-                            Log.e(TAG, response);
                             mUserStickerPacks.remove(userSP);
                             listener.onResponse("");
                         }

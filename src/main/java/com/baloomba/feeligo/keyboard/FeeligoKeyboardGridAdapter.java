@@ -68,7 +68,6 @@ public class FeeligoKeyboardGridAdapter extends BaseAdapter {
 
     public void init(Context context) {
         sInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         mContext = context;
     }
 

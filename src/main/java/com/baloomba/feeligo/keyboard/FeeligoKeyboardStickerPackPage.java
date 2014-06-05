@@ -24,14 +24,17 @@ public class FeeligoKeyboardStickerPackPage extends Fragment {
     private Context mContext;
     private StickerPack mData;
     private FeeligoKeyboard.OnStickerClickListener mListener;
+    private int mPosition;
+    private FeeligoKeyboardGridAdapter mAdapter;
 
     // </editor-fold>
 
-    public static FeeligoKeyboardStickerPackPage newInstance(Context context, StickerPack data,
-                                                     FeeligoKeyboard
+    public static FeeligoKeyboardStickerPackPage newInstance(Context context, int position,
+                                                             StickerPack data, FeeligoKeyboard
                                                              .OnStickerClickListener listener) {
         FeeligoKeyboardStickerPackPage fragment = new FeeligoKeyboardStickerPackPage();
         fragment.mContext = context;
+        fragment.mPosition = position;
         fragment.mData = data;
         fragment.mListener = listener;
         return fragment;
@@ -49,14 +52,32 @@ public class FeeligoKeyboardStickerPackPage extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sticker_pack_page, container, false);
         if (view != null) {
-            FeeligoKeyboardGridAdapter adapter = new FeeligoKeyboardGridAdapter();
-            adapter.init(mContext);
-            adapter.setData(mData.getStickers());
-            adapter.setListener(mListener);
+            mAdapter = new FeeligoKeyboardGridAdapter();
+            mAdapter.init(mContext);
+            mAdapter.setData(mData.getStickers());
+            mAdapter.setListener(mListener);
             ((GridView)view.findViewById(R.id.framgment_sticker_pack_page_grid_view))
-                    .setAdapter(adapter);
+                    .setAdapter(mAdapter);
         }
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    // </editor-fold>
+
+    // <editor-fold desc="GETTERS">
+
+    public StickerPack getStickerPack() {
+        return mData;
+    }
+
+    public int getPosition() {
+        return mPosition;
     }
 
     // </editor-fold>

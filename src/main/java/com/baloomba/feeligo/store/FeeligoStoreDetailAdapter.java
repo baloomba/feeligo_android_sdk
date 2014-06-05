@@ -1,4 +1,4 @@
-package com.baloomba.feeligo;
+package com.baloomba.feeligo.store;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.baloomba.feeligo.R;
 import com.baloomba.feeligo.model.Sticker;
 import com.baloomba.wsvolley.widget.NetworkImageView;
 
@@ -74,6 +75,7 @@ public class FeeligoStoreDetailAdapter extends BaseAdapter {
     private void setContent(final Sticker sticker) {
         String url = sticker.getImage().getUrl(mContext);
         mHolder.image.setImageUrl(url);
+        mHolder.image.setOnClickListener(null);
     }
 
     // </editor-fold>

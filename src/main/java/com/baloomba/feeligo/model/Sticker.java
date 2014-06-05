@@ -234,7 +234,7 @@ public class Sticker implements Parcelable {
         }
 
         public T setSendableCode(String code) {
-            mSendableCode = "[s:" + code + "]";
+            mSendableCode = "[s:p/" + code.split("/")[1] + "]";
             return self();
         }
 

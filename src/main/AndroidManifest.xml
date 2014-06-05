@@ -6,10 +6,10 @@
 
     <application>
 
-        <activity android:name=".FeeligoStickerStoreActivity"
+        <activity android:name=".store.FeeligoStickerStoreActivity"
             android:theme="@style/Feeligo.Theme"
             android:screenOrientation="portrait" />
-        <activity android:name=".FeeligoStickerStoreDetailActivity"
+        <activity android:name=".store.FeeligoStickerStoreDetailActivity"
             android:theme="@style/Feeligo.Theme"
             android:screenOrientation="portrait" />
 
