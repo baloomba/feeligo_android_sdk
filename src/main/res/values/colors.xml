@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="default_active_color">#0084FF</color>
+    <!--<color name="default_active_color">#0084FF</color>-->
+    <color name="default_active_color">#A8B32C</color>
 
     <color name="keyboard_background">#F2F2F2</color>
 
     <color name="black_transparent">#AA000000</color>
 
-    <color name="default_store_add_button_background">#0084FF</color>
-    <color name="default_store_add_button_background_selected">#AA0084FF</color>
+    <!--<color name="default_store_add_button_background">#0084FF</color>-->
+    <!--<color name="default_store_add_button_background_selected">#AA0084FF</color>-->
+    <color name="default_store_add_button_background">#A8B32C</color>
+    <color name="default_store_add_button_background_selected">#AAA8B32C</color>
+
     <color name="store_remove_button_background">#7f7f7f</color>
     <color name="store_remove_button_background_selected">#AA7f7f7f</color>
 

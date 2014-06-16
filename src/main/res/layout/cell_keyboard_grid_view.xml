@@ -9,7 +9,7 @@
         android:id="@+id/cell_keyboard_grid_view_image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="25dp"
+        android:padding="@dimen/cell_keyboard_grid_view_image_view_padding"
         android:src="@drawable/default_placeholder"
         app:is_active="false" />
 </LinearLayout>

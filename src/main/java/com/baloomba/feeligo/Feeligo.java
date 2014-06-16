@@ -123,10 +123,10 @@ public class Feeligo {
                     for (int i = 0; i < array.length(); i++) {
                         mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
                                 .userStickerPackFromJSON(array.getJSONObject(i)));
-                        mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
-                                .userStickerPackFromJSON(array.getJSONObject(i)));
-                        mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
-                                .userStickerPackFromJSON(array.getJSONObject(i)));
+//                        mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
+//                                .userStickerPackFromJSON(array.getJSONObject(i)));
+//                        mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
+//                                .userStickerPackFromJSON(array.getJSONObject(i)));
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "getUserStickerPack.onResponse:" + e.getMessage());

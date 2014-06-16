@@ -2,4 +2,5 @@
 <resources>
     <integer name="keyboard_grid_view_nb_column">5</integer>
     <integer name="store_grid_view_nb_column">4</integer>
+
 </resources>

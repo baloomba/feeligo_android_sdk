@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="feeligo_sticker_keyboard_height">250dp</dimen>
+    <dimen name="cell_keyboard_grid_view_image_view_padding">25dp</dimen>
+</resources>
