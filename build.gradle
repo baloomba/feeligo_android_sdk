@@ -23,9 +23,9 @@ apply plugin: 'android-library'
 dependencies {
     // GRADLE DEPENDENCIES
     // SUPPORT
-    compile 'com.android.support:support-v4:19.1.0'
+    compile project.ANDROID_SUPPORT_V4
     // SUPPORT
-    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile project.ANDROID_SUPPORT_APPCOMPAT_V7
     // WSVOLLEY
     // compile 'com.baloomba:wsvolley:1.0.+'
 

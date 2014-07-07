@@ -41,7 +41,7 @@ public class RequestBuilder {
         WSManager.getInstance().send(request);
     }
 
-    public static void getRecentStickers(Long id, WSResponseListener callbacks) {
+    public static void getRecentStickers(String id, WSResponseListener callbacks) {
         String url = URLBuilder.recentStickers(id);
         WSRequest request = new WSRequest.Builder(WSMethod.GET, url, "feeligo_get_recent_stickers")
                 .setListener(callbacks)
@@ -51,7 +51,7 @@ public class RequestBuilder {
         WSManager.getInstance().send(request);
     }
 
-    public static void setRecentSticker(Long id, Long stickerId, WSResponseListener callbacks) {
+    public static void setRecentSticker(String id, Long stickerId, WSResponseListener callbacks) {
         String url = URLBuilder.recentStickers(id);
         WSRequest request = new WSRequest.Builder(WSMethod.POST, url, "feeligo_set_recent_sticker")
                 .setListener(callbacks)
@@ -79,7 +79,7 @@ public class RequestBuilder {
 
     // <editor-fold desc="USER STICKER PACKS">
 
-    public static void getUserStickerPack(Long id, WSResponseListener callbacks) {
+    public static void getUserStickerPack(String id, WSResponseListener callbacks) {
         String url = URLBuilder.userStickerPack(id);
         WSRequest request = new WSRequest.Builder(WSMethod.GET, url, "feeligo_user_sticker_packs")
                 .setListener(callbacks)
@@ -89,7 +89,7 @@ public class RequestBuilder {
         WSManager.getInstance().send(request);
     }
 
-    public static void addUserStickerPack(Long id, Long packId, WSResponseListener callbacks) {
+    public static void addUserStickerPack(String id, Long packId, WSResponseListener callbacks) {
         String url = URLBuilder.userStickerPack(id);
         WSRequest request = new WSRequest.Builder(WSMethod.POST, url, "feeligo_user_sticker_packs")
                 .addParam("user_sticker_pack[sticker_pack_id]", packId.toString())
@@ -100,7 +100,7 @@ public class RequestBuilder {
         WSManager.getInstance().send(request);
     }
 
-    public static void removeUserStickerPack(Long id, Long packId,  WSResponseListener callbacks) {
+    public static void removeUserStickerPack(String id, Long packId,  WSResponseListener callbacks) {
         String url = URLBuilder.userStickerPack(id, packId);
         WSRequest request = new WSRequest.Builder(WSMethod.DELETE, url,
                 "feeligo_user_sticker_packs")

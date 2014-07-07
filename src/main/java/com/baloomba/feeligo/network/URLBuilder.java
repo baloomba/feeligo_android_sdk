@@ -33,7 +33,7 @@ public class URLBuilder {
         return base() + STICKER_BASE;
     }
 
-    private static String userBase(Long user_id) {
+    private static String userBase(String user_id) {
         return base() + STICKER_USER_BASE + "/" + user_id;
     }
 
@@ -65,15 +65,15 @@ public class URLBuilder {
         return stickerBase() + STICKER_POPULAR;
     }
 
-    public static String recentStickers(Long user_id) {
+    public static String recentStickers(String user_id) {
         return userBase(user_id) + STICKER_BASE + STICKER_RECENT;
     }
 
-    public static String userStickerPack(Long user_id) {
+    public static String userStickerPack(String user_id) {
         return userBase(user_id) + STICKER_USER_STICKER_PACK;
     }
 
-    public static String userStickerPack(Long user_id, Long pack_id) {
+    public static String userStickerPack(String user_id, Long pack_id) {
         return userStickerPack(user_id) + "/" + pack_id;
     }
 

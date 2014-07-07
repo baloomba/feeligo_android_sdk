@@ -30,7 +30,7 @@ public class Feeligo {
 
     private static Feeligo sInstance;
 
-    private Long mUserId;
+    private String mUserId;
 
     private StickerPack mRecent;
     private StickerPack mPopular;
@@ -57,7 +57,7 @@ public class Feeligo {
         }
     }
 
-    public void connect(Long userId) {
+    public void connect(String userId) {
         mUserId = userId;
         updateStickerPack();
         updateFeeligoFont();
