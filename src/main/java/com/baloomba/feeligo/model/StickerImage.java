@@ -1,7 +1,11 @@
-package com.baloomba.feeligo;
+package com.baloomba.feeligo.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.baloomba.feeligo.R;
+import com.baloomba.feeligo.helper.JSONHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,6 +75,19 @@ public class StickerImage implements Parcelable {
 
     public String getURL(int size) {
         switch (size) {
+            case MEDIUM:
+                return getMediumURL();
+            case LARGE:
+                return getLargeURL();
+            case SMALL:
+            default:
+                return getSmallURL();
+        }
+    }
+
+    public String getUrl(Context context) {
+        int density = context.getResources().getInteger(R.integer.density);
+        switch (density) {
             case MEDIUM:
                 return getMediumURL();
             case LARGE:

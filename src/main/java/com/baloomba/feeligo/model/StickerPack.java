@@ -1,7 +1,10 @@
-package com.baloomba.feeligo;
+package com.baloomba.feeligo.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.baloomba.feeligo.helper.JSONHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,8 +22,11 @@ public class StickerPack implements Parcelable {
     private String mAuthor;
     private String mIconURL;
     private int mIconId;
+    private StickerImage mLogo;
     private ArrayList<Sticker> mStickers;
     private String mDate;
+
+    private Boolean mIsLoading = false;
 
     // </editor-fold>
 
@@ -33,6 +39,7 @@ public class StickerPack implements Parcelable {
         mAuthor = builder.mAuthor;
         mIconURL = builder.mIconURL;
         mIconId = builder.mIconId;
+        mLogo = builder.mLogo;
         mStickers = builder.mStickers;
         mDate = builder.mDate;
     }
@@ -44,6 +51,7 @@ public class StickerPack implements Parcelable {
         mAuthor = in.readString();
         mIconURL = in.readString();
         mIconId = in.readInt();
+        mLogo = in.readParcelable(StickerImage.class.getClassLoader());
         mStickers = new ArrayList<Sticker>();
         int size = in.readInt();
         for (int i = 0; i < size; i++) {
@@ -68,12 +76,12 @@ public class StickerPack implements Parcelable {
         return mDescription;
     }
 
-    public String getAuhtor() {
+    public String getAuthor() {
         return mAuthor;
     }
 
     public String getIconURL() {
-        return mIconURL;
+        return mStickers.get(0).getImageURL();
     }
 
     public int getIconId() {
@@ -84,13 +92,34 @@ public class StickerPack implements Parcelable {
         return mStickers;
     }
 
+    public String getLogo(Context context) {
+        return mLogo.getUrl(context);
+    }
+
     public String getDate() {
         return mDate;
+    }
+
+    public Boolean getIsLoading() {
+        return mIsLoading;
     }
 
     // </editor-fold>
 
     // <editor-fold desc="SETTERS">
+
+    public void setIsLoading(Boolean isLoading) {
+        mIsLoading = isLoading;
+    }
+
+    // </editor-fold>
+
+    // <editor-fold desc="METHODS">
+
+    public void update(StickerPack otherPack) {
+        mStickers = otherPack.mStickers;
+        mDate = otherPack.mDate;
+    }
 
     // </editor-fold>
 
@@ -109,6 +138,7 @@ public class StickerPack implements Parcelable {
         dest.writeString(mAuthor);
         dest.writeString(mIconURL);
         dest.writeInt(mIconId);
+        dest.writeParcelable(mLogo, flags);
         dest.writeInt(mStickers.size());
         for (Sticker sticker : mStickers) {
             dest.writeParcelable(sticker, flags);
@@ -149,12 +179,18 @@ public class StickerPack implements Parcelable {
 
         // <editor-fold desc="FACTORY">
 
+        public StickerPack stickerPack(int iconId, ArrayList<Sticker> stickers) {
+            return new Builder(-1L)
+                    .setIconId(iconId)
+                    .setStickers(stickers)
+                    .build();
+        }
+
         public StickerPack stickerPackFromJSON(JSONObject object) throws JSONException {
             if (object == null)
                 return null;
-            object = object.getJSONObject("sticker_pack");
-            if (object == null)
-                return null;
+            if (object.has("sticker_pack"))
+                object = object.getJSONObject("sticker_pack");
             JSONArray array = JSONHelper.getJSONArray(object, "stickers");
             ArrayList<Sticker> stickers = null;
             if (array != null) {
@@ -171,6 +207,8 @@ public class StickerPack implements Parcelable {
                     .setIconURL(JSONHelper.getString(object, "icon_url"))
                     .setIconId(JSONHelper.getInt(object, "icon_id"))
                     .setStickers(stickers)
+                    .setLogo(StickerImage.Factory.getInstance()
+                            .stickerImageFromJSON(JSONHelper.getJSONObject(object, "logo")))
                     .setDate(JSONHelper.getString(object, "provided_to_all_users_at"))
                     .build();
         }
@@ -193,6 +231,7 @@ public class StickerPack implements Parcelable {
         private String mAuthor;
         private String mIconURL;
         private int mIconId;
+        private StickerImage mLogo;
         private ArrayList<Sticker> mStickers;
         private String mDate;
 
@@ -220,6 +259,11 @@ public class StickerPack implements Parcelable {
 
         public T setAuthor(String author) {
             mAuthor = author;
+            return self();
+        }
+
+        public T setLogo(StickerImage logo) {
+            mLogo = logo;
             return self();
         }
 

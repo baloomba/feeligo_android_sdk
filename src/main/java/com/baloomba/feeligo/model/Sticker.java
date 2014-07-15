@@ -1,7 +1,9 @@
-package com.baloomba.feeligo;
+package com.baloomba.feeligo.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.baloomba.feeligo.helper.JSONHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +20,7 @@ public class Sticker implements Parcelable {
     private final static String TAG = Sticker.class.getSimpleName();
 
     private Long mId;
-    private String mCode;
+    private String mSendableCode;
     private ArrayList<String> mTags;
     private String mImageURL;
     private StickerImage mImage;
@@ -29,7 +31,7 @@ public class Sticker implements Parcelable {
 
     public Sticker(Init<?> builder) {
         mId = builder.mId;
-        mCode = builder.mCode;
+        mSendableCode = builder.mSendableCode;
         mTags = builder.mTags;
         mImageURL = builder.mImageURL;
         mImage = builder.mImage;
@@ -37,7 +39,7 @@ public class Sticker implements Parcelable {
 
     public Sticker(Parcel in) {
         mId = in.readLong();
-        mCode = in.readString();
+        mSendableCode = in.readString();
         mTags = null;
         int size = in.readInt();
         if (size != 0) {
@@ -58,8 +60,8 @@ public class Sticker implements Parcelable {
         mId = id;
     }
 
-    public void setCode(String code) {
-        mCode = code;
+    public void setSendableCode(String code) {
+        mSendableCode = code;
     }
 
     public void setTags(ArrayList<String> tags) {
@@ -82,8 +84,8 @@ public class Sticker implements Parcelable {
         return mId;
     }
 
-    public String getCode() {
-        return mCode;
+    public String getSendableCode() {
+        return mSendableCode;
     }
 
     public ArrayList<String> getTags() {
@@ -114,7 +116,7 @@ public class Sticker implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mId);
-        dest.writeString(mCode);
+        dest.writeString(mSendableCode);
         dest.writeInt(mTags != null ? mTags.size() : 0);
         if (mTags != null) {
             for (String tag : mTags) {
@@ -171,7 +173,7 @@ public class Sticker implements Parcelable {
             }
             return new Builder()
                     .setId(object.getLong("id"))
-                    .setCode(object.getString("code"))
+                    .setSendableCode(object.getString("image_url"))
                     .setTags(tags)
                     .setImageURL(object.getString("image_url"))
                     .setImages(StickerImage.Factory.getInstance()
@@ -186,7 +188,7 @@ public class Sticker implements Parcelable {
             if (matcher.find()) {
                 String code = matcher.group(1).split("/")[1];
                 sticker = new Builder()
-                        .setCode(code)
+                        .setSendableCode(code)
                         .setImages(StickerImage.Factory.getInstance().stickerImage(code))
                         .build();
             }
@@ -205,7 +207,7 @@ public class Sticker implements Parcelable {
         // <editor-fold desc="VARIABLES">
 
         private Long mId;
-        private String mCode;
+        private String mSendableCode;
         private ArrayList<String> mTags;
         private String mImageURL;
         private StickerImage mImage;
@@ -216,7 +218,7 @@ public class Sticker implements Parcelable {
 
         public Init() {
             mId = -1L;
-            mCode = "";
+            mSendableCode = "";
             mTags = null;
             mImageURL = "";
             mImage = null;
@@ -231,8 +233,8 @@ public class Sticker implements Parcelable {
             return self();
         }
 
-        public T setCode(String code) {
-            mCode = code;
+        public T setSendableCode(String code) {
+            mSendableCode = "[s:p/" + code.split("/")[1] + "]";
             return self();
         }
 
@@ -243,6 +245,7 @@ public class Sticker implements Parcelable {
 
         public T setImageURL(String url) {
             mImageURL = url;
+            setSendableCode(url.split("http://stkr.es/")[1]);
             return self();
         }
 

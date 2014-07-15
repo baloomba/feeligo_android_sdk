@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="keyboard_grid_view_nb_column">4</integer>
+    <integer name="store_grid_view_nb_column">3</integer>
+    <integer name="density">0</integer>
+</resources>

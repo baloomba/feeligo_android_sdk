@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="StickerStoreAddPack">Add</string>
+    <string name="StickerStoreRemovePack">Remove</string>
+    <string name="Loading">Loading</string>
+</resources>

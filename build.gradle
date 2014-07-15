@@ -23,12 +23,17 @@ apply plugin: 'com.android.library'
 dependencies {
     // GRADLE DEPENDENCIES
     // SUPPORT
-    compile 'com.android.support:support-v4:19.1.0'
-    
+    compile project.ANDROID_SUPPORT_V4
+    // SUPPORT
+    compile project.ANDROID_SUPPORT_APPCOMPAT_V7
+    // WSVOLLEY
     // compile 'com.baloomba:wsvolley:1.0.+'
 
     // PROJECT DEPENDENCIES
+    // WSVOLLEY
     compile project(':wsvolley')
+    // VIEW PAGER INDICATOR
+    compile project(':view_pager_indicator')
 
     // JAR DEPENDENCIES
 }
@@ -40,5 +45,25 @@ android {
     defaultConfig {
         minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "FEELIGO_API_BASE_URL",
+                    "\"http://stickersapi.feeligo.com/api\""
+        }
+
+        release {
+            buildConfigField "String", "FEELIGO_API_BASE_URL",
+                    "\"http://stickersapi.feeligo.com/api\""
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
 }

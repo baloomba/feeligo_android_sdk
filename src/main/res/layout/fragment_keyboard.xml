@@ -2,45 +2,128 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_keyboard_main_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:ignore="HardcodedText" >
+    android:background="@color/keyboard_background"
+    android:visibility="gone" >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/white"
+        android:layout_height="@dimen/feeligo_sticker_keyboard_pack_bar_height"
         android:orientation="horizontal" >
-        <com.baloomba.feeligo.widget.StickerTextView
-            android:id="@+id/frame_sticker_keyboard_store_button"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="!" />
-        <HorizontalScrollView
-            android:layout_width="50dp"
-            android:layout_height="match_parent">
+            android:orientation="vertical" >
+            <com.baloomba.feeligo.widget.FeeligoStickerPackTextView
+                android:id="@+id/frame_sticker_keyboard_store"
+                android:layout_width="@dimen/feeligo_sticker_keyboard_pack_item_size"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:background="@color/keyboard_background"
+                android:textColor="@android:color/white"
+                android:text="@string/feeligo_keyboard_store_text" />
             <LinearLayout
-                android:id="@+id/frame_sticker_keyboard_pack_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/feeligo_sticker_keyboard_separation_height"
+                android:background="@android:color/white" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <com.baloomba.feeligo.widget.FeeligoStickerPackTextView
+                android:id="@+id/feeligo_keyboard_search"
+                android:layout_width="@dimen/feeligo_sticker_keyboard_pack_item_size"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:textColor="@android:color/black"
+                android:text="@string/feeligo_keyboard_search_text" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/feeligo_sticker_keyboard_separation_height"
+                android:background="@android:color/white" />
+        </LinearLayout>
+        <HorizontalScrollView
+            android:id="@+id/frame_sticker_keyboard_horizontal_scroll_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:fadingEdge="none"
+            android:overScrollMode="never" >
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal" >
-                <com.baloomba.feeligo.widget.StickerTextView
+                android:orientation="vertical" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+                    <LinearLayout
+                        android:id="@+id/frame_sticker_keyboard_pack_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="#" />
-                <com.baloomba.feeligo.widget.StickerTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="$" />
+                    android:layout_height="@dimen/feeligo_sticker_keyboard_separation_height"
+                    android:background="@android:color/white" >
+                    <com.viewpagerindicator.UnderlinePageIndicator
+                        android:id="@+id/keyboard_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/white"/>
+                </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/feeligo_sticker_keyboard_separation_height"
+                android:background="@android:color/white" />
+        </LinearLayout>
     </LinearLayout>
-    <GridView
-        android:id="@+id/frame_sticker_keyboard_grid_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:numColumns="3" >
-
-    </GridView>
+        android:layout_height="@dimen/feeligo_sticker_keyboard_height">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragment_keyboard_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+        <LinearLayout
+            android:id="@+id/feeligo_keyboard_search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/feeligo_sticker_keyboard_pack_bar_height">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <GridView
+                android:id="@+id/fragment_sticker_pack_page_grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="@integer/keyboard_grid_view_nb_column" >
+            </GridView>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -1,3 +1,6 @@
 [submodule "libs/wsvolley"]
 	path = libs/wsvolley
 	url = https://github.com/baloomba/WSVolley
+[submodule "libs/view_pager_indicator"]
+	path = libs/view_pager_indicator
+	url = https://github.com/Cleme64/Android-ViewPagerIndicator
