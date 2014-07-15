@@ -1,4 +1,3 @@
 [submodule "libs/wsvolley"]
 	path = libs/wsvolley
-	url = git@github.com:baloomba/WSVolley.git
-	ignore = dirty
+	url = https://github.com/baloomba/WSVolley

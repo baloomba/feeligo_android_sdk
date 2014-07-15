@@ -23,7 +23,7 @@ local.properties
 proguard/
 
 # Submodules libs
-libs/*
+
 
 # Mac files
 .DS_Store
