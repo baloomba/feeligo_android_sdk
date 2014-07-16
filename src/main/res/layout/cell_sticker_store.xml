@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white" >
-    <com.baloomba.feeligo.widget.FeeligoStickerImageView
+    <fr.baloomba.feeligo.widget.FeeligoStickerImageView
         android:id="@+id/cell_sticker_store_sticker_image_view"
         android:layout_width="90dp"
         android:layout_height="90dp"

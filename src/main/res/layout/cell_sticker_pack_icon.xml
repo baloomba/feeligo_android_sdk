@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.baloomba.feeligo.widget.FeeligoStickerPackTextView
+<fr.baloomba.feeligo.widget.FeeligoStickerPackTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cell_sticker_pack_icon_text_view"
     android:layout_width="@dimen/feeligo_sticker_keyboard_pack_item_size"

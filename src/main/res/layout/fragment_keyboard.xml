@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical" >
-            <com.baloomba.feeligo.widget.FeeligoStickerPackTextView
+            <fr.baloomba.feeligo.widget.FeeligoStickerPackTextView
                 android:id="@+id/frame_sticker_keyboard_store"
                 android:layout_width="@dimen/feeligo_sticker_keyboard_pack_item_size"
                 android:layout_height="0dp"
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical" >
-            <com.baloomba.feeligo.widget.FeeligoStickerPackTextView
+            <fr.baloomba.feeligo.widget.FeeligoStickerPackTextView
                 android:id="@+id/feeligo_keyboard_search"
                 android:layout_width="@dimen/feeligo_sticker_keyboard_pack_item_size"
                 android:layout_height="0dp"
