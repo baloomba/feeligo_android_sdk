@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import fr.baloomba.feeligo.Feeligo;
-import com.baloomba.feeligo.R;
+import fr.baloomba.feeligo.R;
 import fr.baloomba.feeligo.helper.ActionBarHelper;
 import fr.baloomba.feeligo.helper.FeeligoSettings;
 import fr.baloomba.feeligo.helper.ViewHelper;
 import fr.baloomba.feeligo.model.StickerPack;
 import fr.baloomba.feeligo.widget.FeeligoStickerImageView;
-import com.baloomba.wsvolley.WSStringResponseListener;
+import fr.baloomba.wsvolley.WSStringResponseListener;
 
 public class FeeligoStickerStoreDetailActivity extends ActionBarActivity {
 

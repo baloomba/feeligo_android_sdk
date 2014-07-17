@@ -12,13 +12,13 @@ import android.widget.ListView;
 
 import com.android.volley.VolleyError;
 
-import com.baloomba.feeligo.R;
+import fr.baloomba.feeligo.R;
 import fr.baloomba.feeligo.helper.ActionBarHelper;
 import fr.baloomba.feeligo.helper.FeeligoSettings;
 import fr.baloomba.feeligo.model.StickerPack;
 import fr.baloomba.feeligo.network.RequestBuilder;
 
-import com.baloomba.wsvolley.WSStringResponseListener;
+import fr.baloomba.wsvolley.WSStringResponseListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;

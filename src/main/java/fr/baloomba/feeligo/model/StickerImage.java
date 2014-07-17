@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.baloomba.feeligo.R;
+import fr.baloomba.feeligo.R;
 import fr.baloomba.feeligo.helper.JSONHelper;
 
 import org.json.JSONException;

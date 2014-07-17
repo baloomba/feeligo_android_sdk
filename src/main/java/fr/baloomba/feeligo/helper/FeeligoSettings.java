@@ -2,7 +2,7 @@ package fr.baloomba.feeligo.helper;
 
 import android.content.Context;
 
-import com.baloomba.feeligo.R;
+import fr.baloomba.feeligo.R;
 
 public class FeeligoSettings {
 

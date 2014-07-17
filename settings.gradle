@@ -1,8 +1,5 @@
 // <editor-fold desc="LIBS">
 
-include 'wsvolley'
-project(':wsvolley').projectDir = new File('libs/wsvolley')
-
 include 'view_pager_indicator'
 project(':view_pager_indicator').projectDir = new File('libs/view_pager_indicator/library')
 

@@ -13,7 +13,7 @@ import android.widget.GridView;
 
 import fr.baloomba.feeligo.FeeligoKeyboard;
 import fr.baloomba.feeligo.model.StickerPack;
-import com.baloomba.feeligo.R;
+import fr.baloomba.feeligo.R;
 
 public class FeeligoKeyboardStickerPackPage extends Fragment {
 

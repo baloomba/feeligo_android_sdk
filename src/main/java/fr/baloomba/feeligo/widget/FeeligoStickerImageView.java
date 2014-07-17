@@ -7,13 +7,13 @@ import android.util.AttributeSet;
 
 import fr.baloomba.feeligo.FeeligoLog;
 import fr.baloomba.feeligo.helper.FeeligoSettings;
-import com.baloomba.feeligo.R;
+import fr.baloomba.feeligo.R;
 
 import fr.baloomba.feeligo.model.StickerImage;
-import com.baloomba.wsvolley.WSManager;
-import com.baloomba.wsvolley.WSMethod;
-import com.baloomba.wsvolley.WSRequest;
-import com.baloomba.wsvolley.widget.NetworkImageView;
+import fr.baloomba.wsvolley.WSManager;
+import fr.baloomba.wsvolley.WSMethod;
+import fr.baloomba.wsvolley.WSRequest;
+import fr.baloomba.wsvolley.widget.NetworkImageView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

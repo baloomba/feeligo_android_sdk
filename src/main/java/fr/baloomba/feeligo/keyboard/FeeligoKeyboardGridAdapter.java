@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import fr.baloomba.feeligo.Feeligo;
 import fr.baloomba.feeligo.FeeligoKeyboard;
 import fr.baloomba.feeligo.model.Sticker;
-import com.baloomba.feeligo.R;
-import com.baloomba.wsvolley.widget.NetworkImageView;
+import fr.baloomba.feeligo.R;
+import fr.baloomba.wsvolley.widget.NetworkImageView;
 
 import java.util.ArrayList;
 

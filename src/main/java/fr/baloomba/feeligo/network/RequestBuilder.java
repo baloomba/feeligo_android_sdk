@@ -2,10 +2,10 @@ package fr.baloomba.feeligo.network;
 
 import fr.baloomba.feeligo.helper.FeeligoSettings;
 
-import com.baloomba.wsvolley.WSManager;
-import com.baloomba.wsvolley.WSMethod;
-import com.baloomba.wsvolley.WSRequest;
-import com.baloomba.wsvolley.WSResponseListener;
+import fr.baloomba.wsvolley.WSManager;
+import fr.baloomba.wsvolley.WSMethod;
+import fr.baloomba.wsvolley.WSRequest;
+import fr.baloomba.wsvolley.WSResponseListener;
 
 public class RequestBuilder {
 

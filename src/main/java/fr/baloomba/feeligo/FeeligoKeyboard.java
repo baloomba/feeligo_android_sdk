@@ -15,7 +15,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.baloomba.feeligo.R;
+import fr.baloomba.feeligo.R;
 
 import fr.baloomba.feeligo.helper.DisplayHelper;
 import fr.baloomba.feeligo.helper.FeeligoSettings;

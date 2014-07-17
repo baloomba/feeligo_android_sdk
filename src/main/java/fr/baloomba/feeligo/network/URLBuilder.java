@@ -1,6 +1,6 @@
 package fr.baloomba.feeligo.network;
 
-import com.baloomba.feeligo.BuildConfig;
+import fr.baloomba.feeligo.BuildConfig;
 import fr.baloomba.feeligo.helper.FeeligoSettings;
 
 import java.net.URLEncoder;

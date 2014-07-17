@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.baloomba.feeligo.R;
+import fr.baloomba.feeligo.R;
 import fr.baloomba.feeligo.model.Sticker;
-import com.baloomba.wsvolley.widget.NetworkImageView;
+import fr.baloomba.wsvolley.widget.NetworkImageView;
 
 import java.util.ArrayList;
 

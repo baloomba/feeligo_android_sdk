@@ -19,6 +19,8 @@ task wrapper(type: Wrapper) {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 dependencies {
     // GRADLE DEPENDENCIES
@@ -27,11 +29,9 @@ dependencies {
     // SUPPORT
     compile project.ANDROID_SUPPORT_APPCOMPAT_V7
     // WSVOLLEY
-    // compile 'com.baloomba:wsvolley:1.0.+'
+    compile 'fr.baloomba:wsvolley:1.0.+'
 
     // PROJECT DEPENDENCIES
-    // WSVOLLEY
-    compile project(':wsvolley')
     // VIEW PAGER INDICATOR
     compile project(':view_pager_indicator')
 
@@ -67,3 +67,52 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 }
+
+group = 'fr.baloomba'
+version = '1.0.0'
+
+signing {
+    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: sonatypeRepo) {
+            authentication(userName: sonatypeUsername,
+                    password: sonatypePassword)
+        }
+
+        pom.project {
+            name 'feeligo_android_sdk'
+            packaging 'aar'
+            description 'Android SDK for Feeligo'
+            url 'https://github.com/baloomba/feeligo_android_sdk'
+
+            scm {
+                url 'scm:git@github.com:baloomba/feeligo_android_sdk.git'
+                connection 'scm:git@github.com:baloomba/feeligo_android_sdk.git'
+                developerConnection 'scm:git@github.com:baloomba/feeligo_android_sdk.git'
+            }
+
+            licenses {
+                license {
+                    name 'The MIT License (MIT)'
+                    url 'http://www.opensource.org/licenses/mit-license.php'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'baloo'
+                    name 'Clement BOULY'
+                    email 'bouly.clement@gmail.com'
+                }
+            }
+        }
+    }
+}
+

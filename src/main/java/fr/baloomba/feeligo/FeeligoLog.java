@@ -2,7 +2,7 @@ package fr.baloomba.feeligo;
 
 import android.util.Log;
 
-import com.baloomba.feeligo.BuildConfig;
+import fr.baloomba.feeligo.BuildConfig;
 
 public class FeeligoLog {
 

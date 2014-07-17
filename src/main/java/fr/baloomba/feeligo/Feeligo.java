@@ -10,9 +10,10 @@ import fr.baloomba.feeligo.model.Sticker;
 import fr.baloomba.feeligo.model.StickerPack;
 import fr.baloomba.feeligo.model.UserStickerPack;
 import fr.baloomba.feeligo.network.RequestBuilder;
-import com.baloomba.wsvolley.WSManager;
-import com.baloomba.wsvolley.WSResponseListener;
-import com.baloomba.wsvolley.WSStringResponseListener;
+
+import fr.baloomba.wsvolley.WSManager;
+import fr.baloomba.wsvolley.WSResponseListener;
+import fr.baloomba.wsvolley.WSStringResponseListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
