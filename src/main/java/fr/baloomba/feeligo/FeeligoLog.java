@@ -9,7 +9,7 @@ public class FeeligoLog {
     // <editor-fold desc="VARIABLES">
 
     public static String TAG = "Feeligo";
-    public static boolean DEBUG = BuildConfig.DEBUG || true;
+    public static boolean DEBUG = BuildConfig.DEBUG;
 
     // </editor-fold>
 

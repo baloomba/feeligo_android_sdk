@@ -1,6 +1,7 @@
 package fr.baloomba.feeligo.network;
 
 import fr.baloomba.feeligo.BuildConfig;
+import fr.baloomba.feeligo.FeeligoLog;
 import fr.baloomba.feeligo.helper.FeeligoSettings;
 
 import java.net.URLEncoder;
@@ -45,7 +46,7 @@ public class URLBuilder {
         try {
             searchString = URLEncoder.encode(searchString, "UTF-8");
         } catch (Exception e) {
-//            LogHelper.log(LogHelper.ERROR, e.getMessage());
+            FeeligoLog.e(e.getMessage());
         }
         searchString = searchString.replaceAll("\\+", "%20");
         return stickerBase() + STICKER_SEARCH + "/" + searchString;
@@ -55,7 +56,7 @@ public class URLBuilder {
         try {
             searchString = URLEncoder.encode(searchString, "UTF-8");
         } catch (Exception e) {
-//            LogHelper.log(LogHelper.ERROR, e.getMessage());
+            FeeligoLog.e(e.getMessage());
         }
         searchString = searchString.replaceAll("\\+", "%20");
         return stickerBase() + STICKER_RECOMMEND + "/" + searchString;

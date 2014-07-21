@@ -1,7 +1,6 @@
 package fr.baloomba.feeligo;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.VolleyError;
 
@@ -79,7 +78,7 @@ public class Feeligo {
                     mRecent = StickerPack.Factory.getInstance()
                             .stickerPack((int) '#', stickers);
                 } catch (JSONException e) {
-                    Log.e(TAG, "getRecentStickers.onResponse:" + e.getMessage());
+                    FeeligoLog.e(TAG, "getRecentStickers.onResponse:" + e.getMessage());
                 }
             }
 
@@ -93,7 +92,6 @@ public class Feeligo {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e(TAG, "response:" + response);
                     JSONObject object = new JSONObject(response);
                     JSONArray array = object.getJSONArray("stickers");
                     ArrayList<Sticker> stickers = new ArrayList<Sticker>();
@@ -104,7 +102,7 @@ public class Feeligo {
                     mPopular = StickerPack.Factory.getInstance()
                             .stickerPack((int) '$', stickers);
                 } catch (JSONException e) {
-                    Log.e(TAG, "getPopularStickers.onResponse:" + e.getMessage());
+                    FeeligoLog.e(TAG, "getPopularStickers.onResponse:" + e.getMessage());
                 }
             }
 
@@ -118,19 +116,14 @@ public class Feeligo {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e(TAG, "response:" + response);
                     JSONObject object = new JSONObject(response);
                     JSONArray array = object.getJSONArray("user_sticker_packs");
                     for (int i = 0; i < array.length(); i++) {
                         mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
                                 .userStickerPackFromJSON(array.getJSONObject(i)));
-//                        mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
-//                                .userStickerPackFromJSON(array.getJSONObject(i)));
-//                        mUserStickerPacks.add(UserStickerPack.Factory.getInstance()
-//                                .userStickerPackFromJSON(array.getJSONObject(i)));
                     }
                 } catch (JSONException e) {
-                    Log.e(TAG, "getUserStickerPack.onResponse:" + e.getMessage());
+                    FeeligoLog.e(TAG, "getUserStickerPack.onResponse:" + e.getMessage());
                 }
             }
 
@@ -214,14 +207,14 @@ public class Feeligo {
                                             .getJSONObject("user_sticker_pack")));
                             listener.onResponse("");
                         } catch (JSONException e) {
-                            Log.e(TAG, e.getMessage());
+                            FeeligoLog.e(TAG, e.getMessage());
                             listener.onErrorResponse(new VolleyError(e.getMessage()));
                         }
                     }
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, "addUserStickerPack:onErrorResponse" + error.getMessage());
+                        FeeligoLog.e(TAG, "addUserStickerPack:onErrorResponse" + error.getMessage());
                         listener.onErrorResponse(error);
                     }
                 }
@@ -248,7 +241,7 @@ public class Feeligo {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.e(TAG, "removeStickerPack:onErrorResponse" + error.getMessage());
+                            FeeligoLog.e(TAG, "removeStickerPack:onErrorResponse" + error.getMessage());
                             listener.onErrorResponse(error);
                         }
                     }
