@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 
 import android.util.AttributeSet;
+import android.util.Log;
 
 import fr.baloomba.feeligo.FeeligoLog;
 import fr.baloomba.feeligo.helper.FeeligoSettings;
@@ -31,7 +32,7 @@ public class FeeligoStickerImageView extends NetworkImageView {
 
     private Context mContext;
     protected Boolean mIsActive = true;
-    private Boolean mFirstShowing = false;
+    private Boolean mFirstShowing = true;
 
     // </editor-fold>
 
@@ -75,13 +76,13 @@ public class FeeligoStickerImageView extends NetworkImageView {
     public void setImageUrl(String url) {
         super.setImageUrl(url + "?f-ed=1");
         if (mIsActive && mFirstShowing) {
-            FeeligoLog.d(TAG, "setImageUrl isActive");
             WSRequest request = new WSRequest
                     .Builder(WSMethod.GET, url, "feeligo_sticker_image_view")
                     .addHeader("Referer", "http://android-app." + FeeligoSettings.getDomain())
                     .setShouldCache(false)
                     .build();
             WSManager.getInstance().send(request);
+            mFirstShowing = false;
         }
     }
 
@@ -115,6 +116,11 @@ public class FeeligoStickerImageView extends NetworkImageView {
             }
             setImageUrl(url);
         }
+    }
+
+    public void setStickerCode(String code, Boolean isNew) {
+        mFirstShowing = isNew;
+        setStickerCode(code);
     }
 
     // </editor-fold>

@@ -8,8 +8,8 @@ public class FeeligoLog {
 
     // <editor-fold desc="VARIABLES">
 
-    public static String TAG = "Volley";
-    public static boolean DEBUG = BuildConfig.DEBUG;
+    public static String TAG = "Feeligo";
+    public static boolean DEBUG = BuildConfig.DEBUG || true;
 
     // </editor-fold>
 
