@@ -30,12 +30,8 @@ dependencies {
     compile project.ANDROID_SUPPORT_APPCOMPAT_V7
     // WSVOLLEY
     compile 'fr.baloomba:wsvolley:1.0.+'
-
-    // PROJECT DEPENDENCIES
     // VIEW PAGER INDICATOR
-    compile project(':view_pager_indicator')
-
-    // JAR DEPENDENCIES
+    compile 'fr.baloomba:viewpagerindicator:2.4.+'
 }
 
 android {
@@ -69,7 +65,7 @@ android {
 }
 
 group = 'fr.baloomba'
-version = '1.0.0'
+version = '1.0.1'
 
 signing {
     required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
@@ -85,6 +81,8 @@ uploadArchives {
             authentication(userName: sonatypeUsername,
                     password: sonatypePassword)
         }
+
+        pom.artifactId = 'feeligo'
 
         pom.project {
             name 'feeligo_android_sdk'
